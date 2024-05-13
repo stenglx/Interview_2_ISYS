@@ -1,9 +1,28 @@
+# TODO
+improve annotated stuff (openapi)
+do some furhter reading
+
+add this to new branch for blank code
+create branch for features
+add features, add new error handling 
+add tests
+download second openapi
+do diff
+argument
+
+do third example
+...
+
 # Simple Spring Boot Microservice Demo
 ```docker run --name mariadb -d --rm -e MYSQL_ROOT_PASSWORD=mypass -e MYSQL_DATABASE=db_example -p 3306:3306 mariadb```
     run the App.class of each component 
     
 We have 2 services and 1 Frontend.
 To communicate with each other our microservices and components use HTTP calls fia Restful API. 
+
+Validator classes to ensure input is alright 
+e.g. number for lecture 
+vaidation that a number consisting of two numbers seperated by a dot is present
     
 ## Features and Tests
 For the features I needed to change frontend and backend accordingly. 
@@ -18,10 +37,44 @@ If return of lecture delete fails
 
 
 ## OpenAPI Doc
-run all as previous
-view localhost 8081/82 ...
-
 -> only available for RestEndpoints, Main Controller = No Rest but just Controller
+Document (Rest) Endpoints (HTTP) -> clients can use to interact with API
++ request & response structures
+-> methods like updateFromDto not considered as only internally used althouh field is documented to provide overview on object (objects used in requests)
+
+- run all as always
+- http://127.0.0.1:8081/swagger-ui/index.html
+- http://127.0.0.1:8082/swagger-ui/index.html
+
+- http://127.0.0.1:8081/v3/api-docs
+- http://127.0.0.1:8082/v3/api-docs
+
+### Download api doc for differ
+ curl -o /Users/Rina/Desktop/test.json http://127.0.0.1:8082/v3/api-docs
+ curl -o /Users/Rina/Desktop/test.xml http://127.0.0.1:8081/v3/api-docs
+
+openapi-diff /Users/Rina/Desktop/test.json /Users/Rina/Desktop/test2.json
+No changes found between the two specifications
+
+-> save changes into json2.test
+
+
+port: server:
+  port: 8081
+  
+e.g. from application.yaml
+
+- @RequestBody = method parameter bound to Body 
+- @PathVariable = bind path varibale from uri to variable id 
+
+Other possible: (catch all possible return codes)
+no return but @ResponseCode for ResourceNotFoundException class
+400 response code is mapped to this exception
+-> exception thrown -> this is returned 
+
+@ApiResponse(responseCode = "201", description = "Employee added successfully", content = @Content(mediaType = "application/json"))
+    @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = "text/plain"))
+
 ### Diff
 For diff I used 
 

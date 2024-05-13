@@ -28,6 +28,7 @@ public class Employee {
     public Employee(){
     }
 
+    // -> part of internal = no interaction when using service via API
     public void updateFromDto(Employee other) {
         this.setName(other.getName());
         this.setEmployeeNumber(other.getEmployeeNumber());

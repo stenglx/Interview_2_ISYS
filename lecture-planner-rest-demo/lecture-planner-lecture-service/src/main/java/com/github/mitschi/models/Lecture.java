@@ -29,6 +29,7 @@ public class Lecture {
     public Lecture() {
     }
 
+    // -> part of internal = no interaction when using service via API
     public void updateFromDto(Lecture other) {
         this.setName(other.getName());
         this.setNumber(other.getNumber());

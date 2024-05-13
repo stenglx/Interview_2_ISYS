@@ -4,6 +4,9 @@ import com.github.mitschi.models.Lecture;
 import com.github.mitschi.models.validation.LectureValidator;
 import com.github.mitschi.repositories.LectureRepository;
 import com.github.mitschi.util.ResourceNotFoundException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -19,16 +22,19 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/lectures")
 @Slf4j
+@Tag(name = "Lecture Controller", description = "Rest Controller class for handling lecture related backend operations")
 public class LectureController {
     private final LectureRepository lectureDao;
     private final LectureValidator validator;
 
     @GetMapping()
+    @Operation(summary = "Returns a list of all lectures")
     public List<Lecture> listLectures() {
         return lectureDao.findAll();
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Returns a lecture via its ID")
     public ResponseEntity<Lecture> getLectureById(@PathVariable("id") Long id) {
         try {
             Lecture lecture = lectureDao.findById(id)
@@ -40,6 +46,7 @@ public class LectureController {
     }
 
     @PostMapping()
+    @Operation(summary = "Saves a new lecture to the database")
     public ResponseEntity<Lecture> createLecture(@RequestBody Lecture lecture) {
         if (!validator.isLectureValid(lecture))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lecture values are not valid");
@@ -49,6 +56,7 @@ public class LectureController {
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Updates the values of a lecture")
     public ResponseEntity<Lecture> updateLecture(@PathVariable("id") Long id,
                                                  @RequestBody Lecture lectureDto) {
         if (!validator.isLectureValid(lectureDto))
