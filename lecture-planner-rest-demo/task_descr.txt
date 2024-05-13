@@ -1,0 +1,17 @@
+
+1) Implement the feature requests:
+* add a feature to delete lectures
+* add a feature to delete employee and his/her lectures
+* add corresponding MockMvc test cases (in the REST services)
+
+2) Generate API documentation:
+* create the openAPI documentation of the versions (before and after 
+implementing the two previous features) and diff them using openAPI tools
+* analyze whether the implementations of the two feature requests are "API 
+breaking"?
+
+3) Implement the feature change request:
+* an employee can teach max. 2 lectures. Modify the lecture service 
+accordingly and also add a test case for that.
+* analyze the impact of this change within and across potentially affected 
+services
