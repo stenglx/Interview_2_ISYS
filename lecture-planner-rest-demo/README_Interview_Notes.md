@@ -1,6 +1,19 @@
 # TODO
-improve annotated stuff (openapi)
-do some furhter reading
+- download api doc of current code
+- add to backup branch
+- add features + error handling (discussed)
+- test features
+- take notes of features and tests
+- download second api 
+- diff
+- dicuss api breaking changes
+
+- make code for 3rd
+- save flatmap thingy as backup
+- write a test 
+- handle 
+- analyze the impact of this change within and across potentially affected 
+services
 
 add this to new branch for blank code
 create branch for features
@@ -49,16 +62,6 @@ Document (Rest) Endpoints (HTTP) -> clients can use to interact with API
 - http://127.0.0.1:8081/v3/api-docs
 - http://127.0.0.1:8082/v3/api-docs
 
-### Download api doc for differ
- curl -o /Users/Rina/Desktop/test.json http://127.0.0.1:8082/v3/api-docs
- curl -o /Users/Rina/Desktop/test.xml http://127.0.0.1:8081/v3/api-docs
-
-openapi-diff /Users/Rina/Desktop/test.json /Users/Rina/Desktop/test2.json
-No changes found between the two specifications
-
--> save changes into json2.test
-
-
 port: server:
   port: 8081
   
@@ -76,7 +79,19 @@ no return but @ResponseCode for ResourceNotFoundException class
     @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = "text/plain"))
 
 ### Diff
-For diff I used 
+### Download api doc for differ
+ #### curl -o /Users/Rina/Desktop/Interview_2_ISYS/lecture-planner-rest-demo/lectureService_doc_initial.json http://127.0.0.1:8082/v3/api-docs
+ #### curl -o /Users/Rina/Desktop/Interview_2_ISYS/lecture-planner-rest-demo/employeeService_doc_initial.json http://127.0.0.1:8081/v3/api-docs
+ 
+ same with other naming after features 
+
+#### openapi-diff /Users/Rina/Desktop/test.json /Users/Rina/Desktop/test2.json
+No changes found between the two specifications
+
+-> save changes into json2.test
+
+#### analyze whether the implementations of the two feature requests are "API 
+breaking"?
 
 
 ## Feature and else
