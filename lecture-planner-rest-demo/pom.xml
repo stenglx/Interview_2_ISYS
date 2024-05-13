@@ -22,8 +22,8 @@
   </modules>
 
 
-  <name>lecture-planner-parent</name>
-  <url>https://github.com/pinzger/lecture-planner-rest-demo</url>
+  <!--<name>lecture-planner-parent</name>
+  <url>https://github.com/pinzger/lecture-planner-rest-demo</url>-->
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
