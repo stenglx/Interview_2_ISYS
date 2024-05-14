@@ -93,7 +93,9 @@ no return but @ResponseCode for ResourceNotFoundException class
 #### openapi-diff /Users/Rina/Desktop/test.json /Users/Rina/Desktop/test2.json
 No changes found between the two specifications
 
--> save changes into json2.test
+openapi-diff /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/lectureService_initial.json /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/lectureService_new_version.json > /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/lecture_Service_diff.txt
+
+openapi-diff /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/employeeService_initial.json /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/employeeService_new_version.json > /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/employee_Service_diff.txt
 
 #### analyze whether the implementations of the two feature requests are "API 
 breaking"?

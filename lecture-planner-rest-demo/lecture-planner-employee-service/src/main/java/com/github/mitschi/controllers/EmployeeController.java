@@ -74,4 +74,20 @@ public class EmployeeController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee Not Found", exc);
         }
     }
+
+    // TODO check whether works with void
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Deletes an employee from the database")
+    public ResponseEntity<?> deleteEmployee(@PathVariable("id") Long emp_id) {
+        try {
+            Employee employee = repository.findById(emp_id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found, id: " + emp_id));
+
+            repository.delete(employee);
+            // HTTP 204 = delete operation success
+            return ResponseEntity.noContent().build();
+        } catch (ResourceNotFoundException exc) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee Not Found for ", exc);
+        }
+    }
 }

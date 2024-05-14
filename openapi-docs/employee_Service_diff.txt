@@ -1,0 +1,50 @@
+Non breaking changes found between the two specifications:
+{
+    "breakingDifferencesFound": false,
+    "nonBreakingDifferences": [
+        {
+            "type": "non-breaking",
+            "action": "add",
+            "code": "method.add",
+            "destinationSpecEntityDetails": [
+                {
+                    "location": "paths./employees/{id}.delete",
+                    "value": {
+                        "tags": [
+                            "Employee Controller"
+                        ],
+                        "summary": "Deletes an employee from the database",
+                        "operationId": "deleteEmployee",
+                        "parameters": [
+                            {
+                                "name": "id",
+                                "in": "path",
+                                "required": true,
+                                "schema": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                }
+                            }
+                        ],
+                        "responses": {
+                            "200": {
+                                "description": "OK",
+                                "content": {
+                                    "*/*": {
+                                        "schema": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "entity": "method",
+            "source": "openapi-diff",
+            "sourceSpecEntityDetails": []
+        }
+    ],
+    "unclassifiedDifferences": []
+}

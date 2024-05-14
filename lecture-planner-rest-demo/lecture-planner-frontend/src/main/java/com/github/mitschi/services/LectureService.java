@@ -46,17 +46,26 @@ public class LectureService {
     }
 
     public Mono<Void> deleteLecture(long pLecId){
-        Mono<Lecture> response = webClient.delete() // send delete request to Lecture Controller
+        Mono<Void> response = webClient.delete() // send delete request to Lecture Controller
                 .uri(lectureEndpointUrl + "/" + pLecId)
                 .retrieve()//client shall retrieve response from server
-                .bodyToMono(Lecture.class);
+                .bodyToMono(Void.class);
 
-        return response.then();
+        return response;//.then();
     }
 
+    public Mono<Void> deleteLecturesOfEmployee(long pEmpId) { // // send delete request to Lecture Controller
+        Mono<Void> response = webClient.delete() // send delete request to Lecture Controller
+                .uri(lectureEndpointUrl + "/emp/" + pEmpId)
+                .retrieve()//client shall retrieve response from server
+                .bodyToMono(Void.class);
+
+        return response;//.then();
+    }
     public String getLectureEndpointUrl() {
         return lectureEndpointUrl;
     }
+
 
 
 }

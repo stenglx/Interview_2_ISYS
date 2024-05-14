@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -114,6 +115,22 @@ public class LectureControllerMvcTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNotFound()); // 404
     }
+
+    @Test
+    public void deleteLecturesOfEmployee() throws Exception {
+        Lecture lecture = new Lecture("Software Testing", "100.000", 1L);
+        Lecture lecture2 = new Lecture("Software Testing 2", "100.001", 1L);
+
+        Mockito.when(repository.findAll()).thenReturn(List.of(lecture, lecture2));
+        // delete = void = no mocking needed as anyway doesnt return anything
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/lectures/emp/1")  // {id}
+                        .content(asJsonString(lecture))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNoContent()); // 204
+    }
+
 
     private String asJsonString(final Object obj) {
         try {

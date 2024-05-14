@@ -40,6 +40,15 @@ public class EmployeeService {
         return response;
     }
 
+    public Mono<Void> deleteEmployee(long pEmpId){
+        Mono<Void> response = webClient.delete() // send delete request to Lecture Controller
+                .uri(employeesEndpointUrl + "/" + pEmpId)
+                .retrieve()//client shall retrieve response from server
+                .bodyToMono(Void.class);
+
+        return response;//.then();
+    }
+
     public String getEmployeesEndpointUrl() {
         return employeesEndpointUrl;
     }

@@ -84,6 +84,49 @@ public class EmployeeControllerMvcTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.employeeNumber").value(100));
     }
 
+    @Test
+    public void deleteEmployee() throws Exception {
+        Employee employee = new Employee("Brian Foo", 100);
+        // mock what is done when function is called
+        // Optional -> statt null wird Optional.empty returned
+        // szenario -> employee mit 1 als id is in DB und wird returned zum testen
+        Mockito.when(repository.findById(1L)).thenReturn(Optional.of(employee));
+        // void delete(T entity) source: https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html#delete(T)
+        Mockito.doNothing().when(repository).delete(employee);
+        // could be left out as delete is void anyway
+
+        // simulate delete request to endpoint
+        // check whether we get expected status code
+        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/1") // typically no request body in Delete
+                        .contentType(MediaType.APPLICATION_JSON) // content is json
+                        .accept(MediaType.APPLICATION_JSON)) // response is json
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    public void deleteEmployeeError() throws Exception {
+        Employee employee = new Employee("Brian Foo", 100);
+        // mock what is done when function is called
+        // Optional -> statt null wird Optional.empty returned
+        // szenario -> employee mit 1 als id is in DB und wird returned zum testen
+        Mockito.when(repository.findById(1L)).thenReturn(Optional.empty());
+        // void delete(T entity) source: https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/CrudRepository.html#delete(T)
+        //Mockito.doNothing().when(repository).delete(employee);
+        // could be left out as delete is void anyway
+
+        // simulate delete request to endpoint
+        // check whether we get expected status code
+        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/2") // typically no request body in Delete
+                        .contentType(MediaType.APPLICATION_JSON) // content is json
+                        .accept(MediaType.APPLICATION_JSON)) // response is json
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/employees/1") // typically no request body in Delete
+                        .contentType(MediaType.APPLICATION_JSON) // content is json
+                        .accept(MediaType.APPLICATION_JSON)) // response is json
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
     private String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);

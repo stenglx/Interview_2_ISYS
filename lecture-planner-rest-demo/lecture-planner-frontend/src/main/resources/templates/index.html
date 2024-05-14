@@ -47,6 +47,17 @@
 
             <input type="submit" value="Add Employee">
         </form>
+        <br><br>
+
+        <form action="/deleteEmployeeAndLectures">
+            <label for="fEmpId">Lecture Name:</label> <br>
+            <select id="fEmpId" name="pEmpId"> <!-- pEmpId (value id) will be send when submit is pressed-->
+                <option th:each="employee: ${employees}" th:value="${employee.id}" th:text="${employee.name}"></option>
+            </select>
+            <br><br>
+
+            <input type="submit" value="Delete Employee and corresponding lectures">
+        </form>
     </div>
 
     <div class="split right">

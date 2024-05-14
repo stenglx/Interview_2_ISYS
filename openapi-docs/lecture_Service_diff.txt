@@ -1,0 +1,95 @@
+Non breaking changes found between the two specifications:
+{
+    "breakingDifferencesFound": false,
+    "nonBreakingDifferences": [
+        {
+            "type": "non-breaking",
+            "action": "add",
+            "code": "path.add",
+            "destinationSpecEntityDetails": [
+                {
+                    "location": "paths./lectures/emp/{empId}",
+                    "value": {
+                        "delete": {
+                            "tags": [
+                                "Lecture Controller"
+                            ],
+                            "summary": "Deletes all lectures of certain employee from the database",
+                            "operationId": "deleteLecturesOfEmployee",
+                            "parameters": [
+                                {
+                                    "name": "empId",
+                                    "in": "path",
+                                    "required": true,
+                                    "schema": {
+                                        "type": "integer",
+                                        "format": "int64"
+                                    }
+                                }
+                            ],
+                            "responses": {
+                                "200": {
+                                    "description": "OK",
+                                    "content": {
+                                        "*/*": {
+                                            "schema": {
+                                                "type": "object"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "entity": "path",
+            "source": "openapi-diff",
+            "sourceSpecEntityDetails": []
+        },
+        {
+            "type": "non-breaking",
+            "action": "add",
+            "code": "method.add",
+            "destinationSpecEntityDetails": [
+                {
+                    "location": "paths./lectures/{id}.delete",
+                    "value": {
+                        "tags": [
+                            "Lecture Controller"
+                        ],
+                        "summary": "Deletes a lecture from the database",
+                        "operationId": "deleteLecture",
+                        "parameters": [
+                            {
+                                "name": "id",
+                                "in": "path",
+                                "required": true,
+                                "schema": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                }
+                            }
+                        ],
+                        "responses": {
+                            "200": {
+                                "description": "OK",
+                                "content": {
+                                    "*/*": {
+                                        "schema": {
+                                            "type": "object"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "entity": "method",
+            "source": "openapi-diff",
+            "sourceSpecEntityDetails": []
+        }
+    ],
+    "unclassifiedDifferences": []
+}

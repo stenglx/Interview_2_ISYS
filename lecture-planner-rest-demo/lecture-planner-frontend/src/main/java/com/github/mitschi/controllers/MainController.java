@@ -12,6 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -62,12 +65,28 @@ public class MainController {
     }
 
     @GetMapping("/deleteLecture") // map HTTP Get Request to method delete Lecture
-
     public RedirectView deleteLecture(@RequestParam("pLecId") long pLecId, Model model)
     {
         lectureService.deleteLecture(pLecId).block(); // block current thread to wait for result
 
         return new RedirectView("/");
+    }
+
+    @GetMapping("/deleteEmployeeAndLectures")
+    public RedirectView deleteEmployeeAndLectures(@RequestParam("pEmpId") long pEmpId, Model model)
+    {
+        // -> error happens during deletion -> block will throw error
+        //
+        try {
+            // make backend do work
+            lectureService.deleteLecturesOfEmployee(pEmpId).block();
+            // if success
+            employeeService.deleteEmployee(pEmpId).block();
+            return new RedirectView("/");
+        }
+        catch (Exception e){
+            return new RedirectView("/error"); // maybe add other view with error message
+        }
     }
 
 }

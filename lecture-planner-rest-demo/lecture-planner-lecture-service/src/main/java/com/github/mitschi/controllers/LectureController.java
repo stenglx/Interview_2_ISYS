@@ -76,6 +76,8 @@ public class LectureController {
 
     @DeleteMapping("/{id}") // add path variable here = extracted from uri
     @Operation(summary = "Deletes a lecture from the database")
+    // ? -> depending on case we return different types
+    // can also use void as spring is capable of handling
     public ResponseEntity<?> deleteLecture(@PathVariable Long id) {
         try { // from update
             Lecture lecture_to_delete = lectureDao.findById(id)
@@ -88,4 +90,19 @@ public class LectureController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lecture Not Found", e); // 404 - Not found
         }
     }
+
+    @DeleteMapping("/emp/{empId}")
+    @Operation(summary = "Deletes all lectures of certain employee from the database")
+    public ResponseEntity<?> deleteLecturesOfEmployee(@PathVariable("empId") Long empId) {
+        List<Lecture> lectures = lectureDao.findAll();
+
+        for (Lecture lecture : lectures){
+            if (lecture.getLecturerId().equals(empId)){
+                lectureDao.delete(lecture);
+            }
+        }
+
+        return ResponseEntity.noContent().build(); // build = finalize response creation
+    }
+
 }
