@@ -19,6 +19,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
 /**
  * Note, when testing a REST API, the tests should focus on:
  * the HTTP response code
@@ -67,6 +70,21 @@ public class LectureControllerMvcTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Software Testing"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.number").value("100.000"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lecturerId").value(1L));
+    }
+
+    @Test
+    public void createLectureFails() throws Exception {
+        Lecture lecture = new Lecture("Software Testing", "100.000", 1L);
+        Mockito.when(validator.isLectureValid(Mockito.any(Lecture.class))).thenReturn(true);
+        Mockito.when(repository.test(Mockito.anyLong())).thenReturn(2L);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/lectures")
+                        .content(asJsonString(lecture))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                        .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                        .andExpect(result -> assertEquals("400 BAD_REQUEST \"Already maximum amount of lectures taught by this employee!\"",
+                                result.getResolvedException().getMessage()));
     }
 
     @Test
