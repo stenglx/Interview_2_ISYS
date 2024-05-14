@@ -20,7 +20,7 @@ import java.util.Map;
 
 @RestController()
 @RequiredArgsConstructor
-@RequestMapping("/lectures")
+@RequestMapping("/lectures") // uri start + annotation of methods
 @Slf4j
 @Tag(name = "Lecture Controller", description = "Rest Controller class for handling lecture related backend operations")
 public class LectureController {
@@ -71,6 +71,21 @@ public class LectureController {
             return ResponseEntity.ok(updatedLecture);
         } catch (ResourceNotFoundException exc) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lecture Not Found", exc);
+        }
+    }
+
+    @DeleteMapping("/{id}") // add path variable here = extracted from uri
+    @Operation(summary = "Deletes a lecture from the database")
+    public ResponseEntity<?> deleteLecture(@PathVariable Long id) {
+        try { // from update
+            Lecture lecture_to_delete = lectureDao.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Lecture not found for id: " + id));
+                    // @ResponseStatus(code = HttpStatus.NOT_FOUND) -> returns 404
+
+            lectureDao.delete(lecture_to_delete);
+            return ResponseEntity.noContent().build(); // = set status code 204
+        } catch (ResourceNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Lecture Not Found", e); // 404 - Not found
         }
     }
 }

@@ -48,6 +48,11 @@ If return of lecture delete fails
 -> delete no employee 
 -> return some other stuff 
 
+### Delete lectures
+
+### Delete employees and corresponding lectures
+
+### Add testcases 
 
 ## OpenAPI Doc
 -> only available for RestEndpoints, Main Controller = No Rest but just Controller
@@ -80,8 +85,8 @@ no return but @ResponseCode for ResourceNotFoundException class
 
 ### Diff
 ### Download api doc for differ
- #### curl -o /Users/Rina/Desktop/Interview_2_ISYS/lecture-planner-rest-demo/lectureService_doc_initial.json http://127.0.0.1:8082/v3/api-docs
- #### curl -o /Users/Rina/Desktop/Interview_2_ISYS/lecture-planner-rest-demo/employeeService_doc_initial.json http://127.0.0.1:8081/v3/api-docs
+ #### curl -o /Users/Rina/Desktop/Interview_2_ISYS/openapi-docs/lectureService_doc_initial.json http://127.0.0.1:8082/v3/api-docs
+ #### curl -o /Users/Rina/Desktop/Interview_2_ISYS/openapi-docs/employeeService_doc_initial.json http://127.0.0.1:8081/v3/api-docs
  
  same with other naming after features 
 

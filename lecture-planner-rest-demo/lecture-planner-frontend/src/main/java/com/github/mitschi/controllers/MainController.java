@@ -61,4 +61,13 @@ public class MainController {
         return new RedirectView("/");
     }
 
+    @GetMapping("/deleteLecture") // map HTTP Get Request to method delete Lecture
+
+    public RedirectView deleteLecture(@RequestParam("pLecId") long pLecId, Model model)
+    {
+        lectureService.deleteLecture(pLecId).block(); // block current thread to wait for result
+
+        return new RedirectView("/");
+    }
+
 }

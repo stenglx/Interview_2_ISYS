@@ -13,6 +13,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
+import java.util.concurrent.ForkJoinPool;
 
 @Service
 public class LectureService {
@@ -44,7 +45,18 @@ public class LectureService {
         return response;
     }
 
+    public Mono<Void> deleteLecture(long pLecId){
+        Mono<Lecture> response = webClient.delete() // send delete request to Lecture Controller
+                .uri(lectureEndpointUrl + "/" + pLecId)
+                .retrieve()//client shall retrieve response from server
+                .bodyToMono(Lecture.class);
+
+        return response.then();
+    }
+
     public String getLectureEndpointUrl() {
         return lectureEndpointUrl;
     }
+
+
 }

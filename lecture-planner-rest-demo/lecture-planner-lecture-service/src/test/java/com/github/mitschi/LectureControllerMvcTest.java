@@ -83,6 +83,36 @@ public class LectureControllerMvcTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Software Testing"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.number").value("100.000"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.lecturerId").value(1L));
+        // get attribute from json response and compare with value
+    }
+
+    @Test
+    public void deleteLecture() throws Exception {
+        Lecture lecture = new Lecture("Software Testing", "100.000", 1L);
+        //Mockito.when(validator.isLectureValid(Mockito.any(Lecture.class))).thenReturn(true);
+        Mockito.when(repository.findById(1L)).thenReturn(Optional.of(lecture));
+        // delete = returns nothing = no need to mock
+        //Mockito.when(repository.save(Mockito.any(Lecture.class))).thenReturn(lecture);
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/lectures/1") // id = returns lecture object
+                        .content(asJsonString(lecture))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    public void deleteLectureNotFound() throws Exception {
+        Lecture lecture = new Lecture("Software Testing", "100.000", 1L);
+        //Mockito.when(validator.isLectureValid(Mockito.any(Lecture.class))).thenReturn(true);
+        Mockito.when(repository.findById(1L)).thenReturn(Optional.of(lecture));
+        // delete = void = no mocking needed as anyway doesnt return anything
+
+        mockMvc.perform(MockMvcRequestBuilders.delete("/lectures/2") // {id}
+                        .content(asJsonString(lecture))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound()); // 404
     }
 
     private String asJsonString(final Object obj) {
