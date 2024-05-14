@@ -1,12 +1,4 @@
 # TODO
-- download api doc of current code
-- add to backup branch
-- add features + error handling (discussed)
-- test features
-- take notes of features and tests
-- download second api 
-- diff
-- dicuss api breaking changes
 
 - make code for 3rd
 - save flatmap thingy as backup
@@ -54,7 +46,7 @@ If return of lecture delete fails
 
 ### Add testcases 
 
-## OpenAPI Doc
+## OpenAPI Doc + API Breaking changes
 -> only available for RestEndpoints, Main Controller = No Rest but just Controller
 Document (Rest) Endpoints (HTTP) -> clients can use to interact with API
 + request & response structures
@@ -84,18 +76,14 @@ no return but @ResponseCode for ResourceNotFoundException class
     @ApiResponse(responseCode = "400", description = "Bad Request", content = @Content(mediaType = "text/plain"))
 
 ### Diff
-### Download api doc for differ
- #### curl -o /Users/Rina/Desktop/Interview_2_ISYS/openapi-docs/lectureService_doc_initial.json http://127.0.0.1:8082/v3/api-docs
- #### curl -o /Users/Rina/Desktop/Interview_2_ISYS/openapi-docs/employeeService_doc_initial.json http://127.0.0.1:8081/v3/api-docs
+ ```curl -o /Users/Rina/Desktop/Interview_2_ISYS/openapi-docs/lectureService_doc_initial.json http://127.0.0.1:8082/v3/api-docs```
+ ``` curl -o /Users/Rina/Desktop/Interview_2_ISYS/openapi-docs/employeeService_doc_initial.json http://127.0.0.1:8081/v3/api-docs```
  
  same with other naming after features 
 
-#### openapi-diff /Users/Rina/Desktop/test.json /Users/Rina/Desktop/test2.json
-No changes found between the two specifications
+```openapi-diff /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/lectureService_initial.json /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/lectureService_new_version.json > /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/lecture_Service_diff.txt```
 
-openapi-diff /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/lectureService_initial.json /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/lectureService_new_version.json > /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/lecture_Service_diff.txt
-
-openapi-diff /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/employeeService_initial.json /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/employeeService_new_version.json > /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/employee_Service_diff.txt
+```openapi-diff /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/employeeService_initial.json /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/employeeService_new_version.json > /Users/Rina/Desktop/Monday_Interview_FinalTry/Interview_2_ISYS/openapi-docs/employee_Service_diff.txt```
 
 https://docs.github.com/en/rest/about-the-rest-api/breaking-changes?apiVersion=2022-11-28
 
@@ -110,3 +98,26 @@ For fronend I'd use flatMap
 Code as backup auf git
 
 -> Tests also for backend -> write test
+
+
+# 3) Implement the feature change request:
+* an employee can teach max. 2 lectures. Modify the lecture service 
+accordingly and also add a test case for that.
+* analyze the impact of this change within and across potentially affected 
+services
+
+## Impact on lecture service:
+new behvaiour - tests need to be adapted
+more complex method 
+
+
+
+## Impact on other services/frontend/... customers who use API
+We have an additional Exception thrown -> they need to handle an additonal Exception
+Especially frontend and generally test cases of other services need to be rethought
+
+Openapi doc diff shows new status codes as diffs
+
+
+
+### I can further define API Responses for methods 
