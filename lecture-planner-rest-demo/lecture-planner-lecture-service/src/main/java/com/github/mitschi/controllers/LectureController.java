@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +51,12 @@ public class LectureController {
     public ResponseEntity<Lecture> createLecture(@RequestBody Lecture lecture) {
         if (!validator.isLectureValid(lecture))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lecture values are not valid");
+
+
+        long count = lectureDao.test(lecture.getLecturerId());
+        if (count > 1){ // already 2 lectures taught by same employee
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Already maximum amount of lectures taught by this employee!");
+        }
 
         lectureDao.save(lecture);
         return new ResponseEntity<>(lecture, HttpStatus.CREATED);

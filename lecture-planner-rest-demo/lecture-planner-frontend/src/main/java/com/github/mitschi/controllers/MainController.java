@@ -60,7 +60,7 @@ public class MainController {
         Lecture l = new Lecture(name, num, empId);
         lectureService.addLecture(l).block();
 
-        // redirect back to home
+        // redirect back to home -> only happens if no error occured
         return new RedirectView("/");
     }
 
