@@ -3,9 +3,12 @@ package com.github.mitschi.controllers;
 import com.github.mitschi.models.Lecture;
 import com.github.mitschi.models.validation.LectureValidator;
 import com.github.mitschi.repositories.LectureRepository;
+import com.github.mitschi.util.RequestProcessingForbiddenException;
 import com.github.mitschi.util.ResourceNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,14 +51,20 @@ public class LectureController {
 
     @PostMapping()
     @Operation(summary = "Saves a new lecture to the database")
-    public ResponseEntity<Lecture> createLecture(@RequestBody Lecture lecture) {
+    @ApiResponses(value = {
+            @ApiResponse(responseCode="201", description="CREATED"),
+            @ApiResponse(responseCode="400", description="BAD_REQUEST"),
+            @ApiResponse(responseCode="422", description="UNPROCESSABLE_ENTITY")})
+    public ResponseEntity<Lecture> createLecture(@RequestBody Lecture lecture) throws RequestProcessingForbiddenException {
         if (!validator.isLectureValid(lecture))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Lecture values are not valid");
 
 
-        long count = lectureDao.test(lecture.getLecturerId());
+        long count = lectureDao.getLecturesOfEmployee(lecture.getLecturerId());
         if (count > 1){ // already 2 lectures taught by same employee
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Already maximum amount of lectures taught by this employee!");
+            // Unprocessable Entity = 422
+            throw new RequestProcessingForbiddenException("Already maximum amount of lectures taught by this employee!");
+            //return new ResponseEntity<>(lecture, HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
         lectureDao.save(lecture);

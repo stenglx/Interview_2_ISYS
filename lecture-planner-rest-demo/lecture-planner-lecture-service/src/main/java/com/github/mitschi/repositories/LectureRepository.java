@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface LectureRepository extends JpaRepository<Lecture, Long> {
     @Query("SELECT COUNT(lecture) FROM Lecture lecture WHERE lecture.lecturerId=?1")
-    long test(long id);
+    long getLecturesOfEmployee(long id);
 }

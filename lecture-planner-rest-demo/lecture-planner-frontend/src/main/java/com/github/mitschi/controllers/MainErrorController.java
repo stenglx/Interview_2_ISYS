@@ -10,5 +10,6 @@ public class MainErrorController implements ErrorController {
     public String handleError() {
         //do something like logging
         return "error";
+        // return name of other page here
     }
 }

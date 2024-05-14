@@ -38,9 +38,9 @@ public class LectureService {
     public Mono<Lecture> addLecture(Lecture l) {
         Mono<Lecture> response = webClient.post()
                 .uri(lectureEndpointUrl)
-                .body(BodyInserters.fromValue(l))
+                .body(BodyInserters.fromValue(l))// set body of request
                 .retrieve()
-                .bodyToMono(Lecture.class);
+                .bodyToMono(Lecture.class); // Mono = async response
 
         return response;
     }

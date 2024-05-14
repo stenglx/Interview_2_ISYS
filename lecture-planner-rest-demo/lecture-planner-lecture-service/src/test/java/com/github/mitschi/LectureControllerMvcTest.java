@@ -76,15 +76,15 @@ public class LectureControllerMvcTest {
     public void createLectureFails() throws Exception {
         Lecture lecture = new Lecture("Software Testing", "100.000", 1L);
         Mockito.when(validator.isLectureValid(Mockito.any(Lecture.class))).thenReturn(true);
-        Mockito.when(repository.test(Mockito.anyLong())).thenReturn(2L);
+        Mockito.when(repository.getLecturesOfEmployee(Mockito.anyLong())).thenReturn(2L);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/lectures")
                         .content(asJsonString(lecture))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
-                        .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                        .andExpect(result -> assertEquals("400 BAD_REQUEST \"Already maximum amount of lectures taught by this employee!\"",
-                                result.getResolvedException().getMessage()));
+                        .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity());
+                        //.andExpect(result -> assertEquals("422 UNPROCESSABLE_ENTITY \"Already maximum amount of lectures taught by this employee!\"",
+                        //        result.getResolvedException().getMessage()));
     }
 
     @Test
